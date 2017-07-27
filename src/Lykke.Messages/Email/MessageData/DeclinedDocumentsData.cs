@@ -5,6 +5,6 @@
         public const string QueueName = "DeclinedDocuments";
 
         public string FullName { get; set; }
-        public KycDocument[] Documents { get; set; }
+        public KycDocumentData[] Documents { get; set; }
     }
 }

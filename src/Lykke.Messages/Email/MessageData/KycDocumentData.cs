@@ -2,7 +2,7 @@
 
 namespace Lykke.Messages.Email.MessageData
 {
-    public class KycDocument
+    public class KycDocumentData
     {
         public string ClientId { get; set; }
         public string DocumentId { get; set; }
