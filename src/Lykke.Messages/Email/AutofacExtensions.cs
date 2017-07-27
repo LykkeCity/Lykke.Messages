@@ -18,7 +18,18 @@ namespace Lykke.Messages.Email
         {
             var messageProducer = new EmailMessageQueueProducer(new AzureQueueExt(connectionString, queueName));
             var emailSender = new EmailSender(messageProducer);
-            container.RegisterInstance<IEmailMessageProducer>(new EmailMessageQueueProducer(new AzureQueueExt(connectionString, queueName)));
+            container.RegisterInstance<IEmailSender>(emailSender);
+        }
+
+        /// <summary>
+        /// Registers <see cref="IEmailSender"/> that point to inmemory queue
+        /// </summary>
+        /// <param name="container"></param>
+        public static void RegisterEmailSenderViaInmemoryQueueMessageProducer(this ContainerBuilder container)
+        {
+            var messageProducer = new EmailMessageQueueProducer(new QueueExtInMemory());
+            var emailSender = new EmailSender(messageProducer);
+            container.RegisterInstance<IEmailSender>(emailSender);
         }
     }
 }
