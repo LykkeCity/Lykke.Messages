@@ -43,19 +43,19 @@ namespace Lykke.Messages.Email
                 QueueType.Create(RequestForDocumentData.QueueName, typeof(QueueRequestModel<SendEmailData<RequestForDocumentData>>)));
         }
 
-        public Task ProduceSendEmailCommand<T>(string mailAddress, T msgData) where T: IEmailMessageData
+        public Task ProduceSendEmailCommand<T>(string partnerId, string mailAddress, T msgData) where T: IEmailMessageData
         {
-            var data = SendEmailData<T>.Create(mailAddress, msgData);
+            var data = SendEmailData<T>.Create(partnerId, mailAddress, msgData);
             var msg = new QueueRequestModel<SendEmailData<T>> { Data = data};
             return _queueExt.PutMessageAsync(msg);
         }
 
-        public Task ProduceSendEmailBroadcast<T>(BroadcastGroup broadcastGroup, T msgData) where T: IEmailMessageData
+        public Task ProduceSendEmailBroadcast<T>(string partnerId, BroadcastGroup broadcastGroup, T msgData) where T: IEmailMessageData
         {
              if (typeof(PlainTextData) == typeof(T))
                 throw new ArgumentException("Broadcast can not be done using PlainTextData type");
 
-            var data = SendBroadcastData<T>.Create(broadcastGroup, msgData);
+            var data = SendBroadcastData<T>.Create(partnerId, broadcastGroup, msgData);
             var msg = new QueueRequestModel<SendBroadcastData<T>> { Data = data };
             return _queueExt.PutMessageAsync(msg);
         }

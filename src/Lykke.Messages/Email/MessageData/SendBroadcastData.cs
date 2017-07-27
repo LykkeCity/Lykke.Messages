@@ -10,10 +10,11 @@ namespace Lykke.Messages.Email.MessageData
         public BroadcastGroup BroadcastGroup { get; set; }
         public T MessageData { get; set; }
 
-        public static SendBroadcastData<T> Create(BroadcastGroup broadcastGroup, T msgData)
+        public static SendBroadcastData<T> Create(string partnerId, BroadcastGroup broadcastGroup, T msgData)
         {
             return new SendBroadcastData<T>
             {
+                PartnerId = partnerId,
                 BroadcastGroup = broadcastGroup,
                 MessageData = msgData
             };

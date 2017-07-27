@@ -12,14 +12,14 @@ namespace Lykke.Messages.Email
             _messageProducer = messageProducer;
         }
 
-        public async Task SendEmailAsync<T>(string email, T msgData) where T: IEmailMessageData
+        public async Task SendEmailAsync<T>(string partnerId, string email, T msgData) where T: IEmailMessageData
         {
-            await _messageProducer.ProduceSendEmailCommand(email, msgData);
+            await _messageProducer.ProduceSendEmailCommand(partnerId, email, msgData);
         }
 
-        public async Task SendEmailBroadcastAsync<T>(BroadcastGroup broadcastGroup, T messageData) where T : IEmailMessageData
+        public async Task SendEmailBroadcastAsync<T>(string partnerId, BroadcastGroup broadcastGroup, T messageData) where T : IEmailMessageData
         {
-            await _messageProducer.ProduceSendEmailBroadcast(broadcastGroup, messageData);
+            await _messageProducer.ProduceSendEmailBroadcast(partnerId, broadcastGroup, messageData);
         }
     }
 }
