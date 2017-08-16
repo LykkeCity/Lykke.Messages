@@ -12,5 +12,6 @@
         public string AccName { get; set; }
         public string BankName { get; set; }
         public string AccHolderAddress { get; set; }
+        public string Year { get; set; }
     }
 }

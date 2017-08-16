@@ -9,5 +9,6 @@
         public string Comment { get; set; }
         public string Amount { get; set; }
         public string AssetId { get; set; }
+        public string Year { get; set; }
     }
 }
