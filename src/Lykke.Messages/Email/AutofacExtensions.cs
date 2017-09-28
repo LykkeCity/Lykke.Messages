@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using Autofac;
 using AzureStorage.Queue;
+using Lykke.SettingsReader;
 
 namespace Lykke.Messages.Email
 {
@@ -14,9 +15,9 @@ namespace Lykke.Messages.Email
         /// <param name="container"></param>
         /// <param name="connectionString">Queue connection string</param>
         /// <param name="queueName">Queue name</param>
-        public static void RegisterEmailSenderViaAzureQueueMessageProducer(this ContainerBuilder container, string connectionString, string queueName = "emailsqueue")
+        public static void RegisterEmailSenderViaAzureQueueMessageProducer(this ContainerBuilder container, IReloadingManager<string> connectionString, string queueName = "emailsqueue")
         {
-            var messageProducer = new EmailMessageQueueProducer(new AzureQueueExt(connectionString, queueName));
+            var messageProducer = new EmailMessageQueueProducer(AzureQueueExt.Create(connectionString, queueName));
             var emailSender = new EmailSender(messageProducer);
             container.RegisterInstance<IEmailSender>(emailSender);
         }

@@ -3,6 +3,7 @@ using Lykke.Messages.Email.MessageData;
 using System;
 using System.Threading.Tasks;
 using Autofac;
+using Lykke.SettingsReader;
 
 namespace Lykke.Messages.Utils
 {
@@ -15,8 +16,9 @@ namespace Lykke.Messages.Utils
 
         static void Main(string[] args)
         {
+            var connectionStringReloadingManager = new ConstantReloadingManager<string>("DefaultEndpointsProtocol=https;AccountName=lkedevmain;AccountKey=l0W0CaoNiRZQIqJ536sIScSV5fUuQmPYRQYohj/UjO7+ZVdpUiEsRLtQMxD+1szNuAeJ351ndkOsdWFzWBXmdw==");
             var builder = new ContainerBuilder();
-            builder.RegisterEmailSenderViaAzureQueueMessageProducer("DefaultEndpointsProtocol=https;AccountName=lkedevmain;AccountKey=l0W0CaoNiRZQIqJ536sIScSV5fUuQmPYRQYohj/UjO7+ZVdpUiEsRLtQMxD+1szNuAeJ351ndkOsdWFzWBXmdw==", "emailsqueue");
+            builder.RegisterEmailSenderViaAzureQueueMessageProducer(connectionStringReloadingManager, "emailsqueue");
             var container = builder.Build();
             var sender = container.Resolve<IEmailSender>();
 
@@ -97,5 +99,20 @@ namespace Lykke.Messages.Utils
         }
 
 
+    }
+
+    internal class ConstantReloadingManager<T> : ReloadingManagerBase<T>
+    {
+        private readonly T _value;
+
+        public ConstantReloadingManager(T value)
+        {
+            _value = value;
+        }
+
+        protected override Task<T> Load()
+        {
+            return Task.FromResult(_value);
+        }
     }
 }
