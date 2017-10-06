@@ -45,7 +45,9 @@ namespace Lykke.Messages.Email
                 QueueType.Create(SwiftCashOutRequestData.QueueName, typeof(QueueRequestModel<SendEmailData<SwiftCashOutRequestData>>)),
                 QueueType.Create(SwiftConfirmedData.QueueName, typeof(QueueRequestModel<SendBroadcastData<SwiftConfirmedData>>)),
                 QueueType.Create(TransferCompletedData.QueueName, typeof(QueueRequestModel<SendEmailData<TransferCompletedData>>)),
-                QueueType.Create(UserRegisteredData.QueueName, typeof(QueueRequestModel<SendBroadcastData<UserRegisteredData>>)));
+                QueueType.Create(UserRegisteredData.QueueName, typeof(QueueRequestModel<SendBroadcastData<UserRegisteredData>>)),
+                QueueType.Create(RegistrationEmailVerifyData.QueueName, typeof(QueueRequestModel<SendBroadcastData<RegistrationEmailVerifyData>>))
+            );
         }
 
         public Task ProduceSendEmailCommand<T>(string partnerId, string mailAddress, T msgData) where T : IEmailMessageData
