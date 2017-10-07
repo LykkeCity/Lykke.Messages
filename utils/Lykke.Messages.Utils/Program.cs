@@ -16,7 +16,9 @@ namespace Lykke.Messages.Utils
 
         static void Main(string[] args)
         {
-            var connectionStringReloadingManager = new ConstantReloadingManager<string>("DefaultEndpointsProtocol=https;AccountName=lkedevmain;AccountKey=l0W0CaoNiRZQIqJ536sIScSV5fUuQmPYRQYohj/UjO7+ZVdpUiEsRLtQMxD+1szNuAeJ351ndkOsdWFzWBXmdw==");
+            //var connectionStringReloadingManager = new ConstantReloadingManager<string>("DefaultEndpointsProtocol=https;AccountName=lkedevmain;AccountKey=l0W0CaoNiRZQIqJ536sIScSV5fUuQmPYRQYohj/UjO7+ZVdpUiEsRLtQMxD+1szNuAeJ351ndkOsdWFzWBXmdw==");
+
+            var connectionStringReloadingManager = new ConstantReloadingManager<string>("UseDevelopmentStorage=true");
             var builder = new ContainerBuilder();
             builder.RegisterEmailSenderViaAzureQueueMessageProducer(connectionStringReloadingManager, "emailsqueue");
             var container = builder.Build();
@@ -28,7 +30,9 @@ namespace Lykke.Messages.Utils
             //SendCachInMessageAsync(sender).Wait();
             //SendRemindPasswordMessageAsync(sender).Wait();
 
-            SendTestKycDeclined(sender).Wait();
+            //SendTestKycDeclined(sender).Wait();
+            //SendTestEmailConfirmationAsync(sender).Wait();
+            //SendRegistrationEmailVerifyMessageAsync(sender).Wait();
         }
 
         private static Task SendTestKycDeclined(IEmailSender sender)
@@ -95,6 +99,15 @@ namespace Lykke.Messages.Utils
             return sender.SendEmailAsync(PartnerId, EmailAddress, new RemindPasswordData
             {
                 PasswordHint = "Hello, World!"
+            });
+        }
+
+        private static Task SendRegistrationEmailVerifyMessageAsync(IEmailSender sender)
+        {
+            return sender.SendEmailAsync("Lykke", "testds@test.com", new RegistrationEmailVerifyData
+            {
+                Code = "1234",
+                Year = "2017"
             });
         }
 

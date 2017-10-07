@@ -46,7 +46,7 @@ namespace Lykke.Messages.Email
                 QueueType.Create(SwiftConfirmedData.QueueName, typeof(QueueRequestModel<SendBroadcastData<SwiftConfirmedData>>)),
                 QueueType.Create(TransferCompletedData.QueueName, typeof(QueueRequestModel<SendEmailData<TransferCompletedData>>)),
                 QueueType.Create(UserRegisteredData.QueueName, typeof(QueueRequestModel<SendBroadcastData<UserRegisteredData>>)),
-                QueueType.Create(RegistrationEmailVerifyData.QueueName, typeof(QueueRequestModel<SendBroadcastData<RegistrationEmailVerifyData>>))
+                QueueType.Create(RegistrationEmailVerifyData.QueueName, typeof(QueueRequestModel<SendEmailData<RegistrationEmailVerifyData>>))
             );
         }
 
