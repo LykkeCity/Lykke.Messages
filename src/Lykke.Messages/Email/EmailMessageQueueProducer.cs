@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using AzureStorage.Queue;
 using Lykke.Messages.Email.MessageData;
@@ -14,6 +15,8 @@ namespace Lykke.Messages.Email
             _queueExt = queueExt;
 
             _queueExt.RegisterTypes(
+                QueueType.Create(EmailMessageData.QueueName, typeof(QueueRequestModel<EmailMessageData>)),
+
                 QueueType.Create(BankCashInData.QueueName, typeof(QueueRequestModel<SendEmailData<BankCashInData>>)),
                 QueueType.Create(CashInData.QueueName, typeof(QueueRequestModel<SendEmailData<CashInData>>)),
                 QueueType.Create(CashInRefundData.QueueName, typeof(QueueRequestModel<SendEmailData<CashInRefundData>>)),
@@ -55,6 +58,13 @@ namespace Lykke.Messages.Email
         {
             var data = SendEmailData<T>.Create(partnerId, mailAddress, msgData);
             var msg = new QueueRequestModel<SendEmailData<T>> { Data = data };
+            return _queueExt.PutMessageAsync(msg);
+        }
+
+        public Task ProduceSendEmailCommand(string partnerId, string email, string templateId, IDictionary<string, string> templateData, IEnumerable<EmailAttachmentData> attachments)
+        {
+            var data = EmailMessageData.Create(partnerId, email, templateId, templateData, attachments);
+            var msg = new QueueRequestModel<EmailMessageData> { Data = data };
             return _queueExt.PutMessageAsync(msg);
         }
 

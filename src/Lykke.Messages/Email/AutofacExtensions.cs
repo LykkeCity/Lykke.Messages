@@ -1,8 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using Autofac;
+using AzureStorage;
+using AzureStorage.Blob;
 using AzureStorage.Queue;
+using Common.Log;
 using Lykke.SettingsReader;
 
 namespace Lykke.Messages.Email
@@ -10,27 +11,42 @@ namespace Lykke.Messages.Email
     public static class AutofacExtensions
     {
         /// <summary>
-        /// Registers <see cref="IEmailSender"/> that point to Azure queue
+        /// Registers <see cref="IEmailSender"/> that points to Azure queue
         /// </summary>
-        /// <param name="container"></param>
-        /// <param name="connectionString">Queue connection string</param>
-        /// <param name="queueName">Queue name</param>
-        public static void RegisterEmailSenderViaAzureQueueMessageProducer(this ContainerBuilder container, IReloadingManager<string> connectionString, string queueName = "emailsqueue")
+        /// <param name="builder">Autofac container builder</param>
+        /// <param name="connectionStringFunc">Function to extract azure storage connection string where all messaging and templating data lies</param>
+        public static void RegisterEmailSenderViaAzureQueueMessageProducer(this ContainerBuilder builder, Func<IComponentContext, IReloadingManager<string>> connectionStringFunc)
         {
-            var messageProducer = new EmailMessageQueueProducer(AzureQueueExt.Create(connectionString, queueName));
-            var emailSender = new EmailSender(messageProducer);
-            container.RegisterInstance<IEmailSender>(emailSender);
+            builder.Register(ctx =>
+            {
+                var log = ctx.Resolve<ILog>();
+                var connectionString = connectionStringFunc(ctx);
+                var blob = AzureBlobStorage.Create(connectionString);
+                var queue = AzureQueueExt.Create(connectionString, Utils.EmailMessageQueueName);
+                var validator = new JsonSchemaTemplateDataValidator(blob, Utils.EmailValidationSchemaContainerName);
+                var attachmentProducer = new EmailAttachmentProducer(blob, Utils.EmailAttachmentContainerName, log);
+                var messageProducer = new EmailMessageQueueProducer(queue);
+                return new EmailSender(validator, attachmentProducer, messageProducer);
+            }).As<IEmailSender>().SingleInstance();
         }
 
         /// <summary>
         /// Registers <see cref="IEmailSender"/> that point to inmemory queue
         /// </summary>
-        /// <param name="container"></param>
-        public static void RegisterEmailSenderViaInmemoryQueueMessageProducer(this ContainerBuilder container)
+        /// <param name="builder">Autofac container builder</param>
+        /// <param name="connectionStringFunc">Function to extract azure storage connection string where all messaging and templating data lies</param>
+        public static void RegisterEmailSenderMockQueueMessageProducer(this ContainerBuilder builder, Func<IComponentContext, IReloadingManager<string>> connectionStringFunc, IBlobStorage blobMock, IQueueExt queueMock)
         {
-            var messageProducer = new EmailMessageQueueProducer(new QueueExtInMemory());
-            var emailSender = new EmailSender(messageProducer);
-            container.RegisterInstance<IEmailSender>(emailSender);
+            builder.Register(ctx =>
+            {
+                var log = ctx.Resolve<ILog>();
+                var connectionString = connectionStringFunc(ctx);
+                var blob = AzureBlobStorage.Create(connectionString);
+                var validator = new JsonSchemaTemplateDataValidator(blob, Utils.EmailValidationSchemaContainerName);
+                var attachmentProducer = new EmailAttachmentProducer(blobMock, Utils.EmailAttachmentContainerName, log);
+                var messageProducer = new EmailMessageQueueProducer(queueMock);
+                return new EmailSender(validator, attachmentProducer, messageProducer);
+            }).As<IEmailSender>().SingleInstance();
         }
     }
 }

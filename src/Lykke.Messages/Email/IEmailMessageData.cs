@@ -1,4 +1,4 @@
-﻿namespace Lykke.Messages.Email.MessageData
+﻿namespace Lykke.Messages.Email
 {
     public interface IEmailMessageData
     {

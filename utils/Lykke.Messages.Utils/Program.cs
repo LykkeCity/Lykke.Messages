@@ -11,25 +11,26 @@ namespace Lykke.Messages.Utils
     {
         public const string ClientId = "0dc14d6a-9bdf-47c3-8320-dd12612e7617";
         public const string PartnerId = "AlpineVault";
-        //public const string EmailAddress = "darthjurassic@yopmail.com";
-        public const string EmailAddress = "yury@batsyuro.ru";
+        //public const string EmailAddress = "yury@batsyuro.ru";
+        public const string EmailAddress = "yury.batsyuro@lykke.com";
+        //public const string EmailAddress = "test.tiger6@gmail.com";
 
         static void Main(string[] args)
         {
-            //var connectionStringReloadingManager = new ConstantReloadingManager<string>("DefaultEndpointsProtocol=https;AccountName=lkedevmain;AccountKey=l0W0CaoNiRZQIqJ536sIScSV5fUuQmPYRQYohj/UjO7+ZVdpUiEsRLtQMxD+1szNuAeJ351ndkOsdWFzWBXmdw==");
+            var connectionStringReloadingManager = new ConstantReloadingManager<string>("DefaultEndpointsProtocol=https;AccountName=lkedevmain;AccountKey=l0W0CaoNiRZQIqJ536sIScSV5fUuQmPYRQYohj/UjO7+ZVdpUiEsRLtQMxD+1szNuAeJ351ndkOsdWFzWBXmdw==");
 
-            var connectionStringReloadingManager = new ConstantReloadingManager<string>("UseDevelopmentStorage=true");
+            //var connectionStringReloadingManager = new ConstantReloadingManager<string>("UseDevelopmentStorage=true");
             var builder = new ContainerBuilder();
-            builder.RegisterEmailSenderViaAzureQueueMessageProducer(connectionStringReloadingManager, "emailsqueue");
+            builder.RegisterEmailSenderViaAzureQueueMessageProducer(ctx => connectionStringReloadingManager);
             var container = builder.Build();
             var sender = container.Resolve<IEmailSender>();
 
-            //SendTestEmailConfirmationAsync(sender).Wait();
-            //SendRegistrationMessageMessageAsync(sender).Wait();
-            //SendKycOkMessageAsync(sender).Wait();
-            //SendCachInMessageAsync(sender).Wait();
-            //SendRemindPasswordMessageAsync(sender).Wait();
+            SendTestEmailConfirmationAsync(sender).Wait();
+            SendRegistrationMessageMessageAsync(sender).Wait();
+            SendRemindPasswordMessageAsync(sender).Wait();
+            SendKycOkMessageAsync(sender).Wait();
 
+            //SendCachInMessageAsync(sender).Wait();
             //SendTestKycDeclined(sender).Wait();
             //SendTestEmailConfirmationAsync(sender).Wait();
             //SendRegistrationEmailVerifyMessageAsync(sender).Wait();
