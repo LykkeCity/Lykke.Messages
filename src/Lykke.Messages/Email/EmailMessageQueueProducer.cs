@@ -23,6 +23,7 @@ namespace Lykke.Messages.Email
                 QueueType.Create(EmailComfirmationData.QueueName, typeof(QueueRequestModel<SendEmailData<EmailComfirmationData>>)),
                 QueueType.Create(FailedTransactionData.QueueName, typeof(QueueRequestModel<SendBroadcastData<FailedTransactionData>>)),
                 QueueType.Create(FreezePeriodNotificationData.QueueName, typeof(QueueRequestModel<SendBroadcastData<FreezePeriodNotificationData>>)),
+                QueueType.Create(KycRegReminderData.QueueName, typeof(QueueRequestModel<SendEmailData<KycRegReminderData>>)),
                 QueueType.Create(KycOkData.QueueName, typeof(QueueRequestModel<SendEmailData<KycOkData>>)),
                 QueueType.Create(MyLykkeCashInData.QueueName, typeof(QueueRequestModel<SendEmailData<MyLykkeCashInData>>)),
                 QueueType.Create(NoRefundDepositDoneData.QueueName, typeof(QueueRequestModel<SendEmailData<NoRefundDepositDoneData>>)),

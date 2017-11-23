@@ -4,6 +4,7 @@ using System;
 using System.Threading.Tasks;
 using Autofac;
 using Lykke.SettingsReader;
+using System.Globalization;
 
 namespace Lykke.Messages.Utils
 {
@@ -30,6 +31,7 @@ namespace Lykke.Messages.Utils
             SendEmailConfirmationAsync(sender).Wait();
             SendFailedTransactionAsync(sender).Wait();
             SendFreezePeriodNotificationAsync(sender).Wait();
+            SendKycRegReminderAsync(sender).Wait();
             SendKycOkAsync(sender).Wait();
             SendMyLykkeCashInAsync(sender).Wait();
             SendNoRefundDepositDoneAsync(sender).Wait();
@@ -152,6 +154,17 @@ namespace Lykke.Messages.Utils
             {
                 FreezePeriod = DateTime.Now.AddDays(15),
                 Year = DateTime.UtcNow.Year.ToString()
+            });
+        }
+
+        private static Task SendKycRegReminderAsync(IEmailSender sender)
+        {
+            return sender.SendEmailAsync(PartnerId, EmailAddress, new KycRegReminderData
+            {
+                FullName = "Client Full Name",
+                Subject = "Lykke Wallet",
+                Date = DateTime.UtcNow.ToString("MMM dd, hh:mm tt", CultureInfo.InvariantCulture),
+                Year = DateTime.Now.Year.ToString()
             });
         }
 
