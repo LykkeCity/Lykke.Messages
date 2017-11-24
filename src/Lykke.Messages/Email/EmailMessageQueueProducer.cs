@@ -14,6 +14,7 @@ namespace Lykke.Messages.Email
             _queueExt = queueExt;
 
             _queueExt.RegisterTypes(
+                QueueType.Create(LykkeCardVisaData.QueueName, typeof(QueueRequestModel<SendEmailData<LykkeCardVisaData>>)),
                 QueueType.Create(BankCashInData.QueueName, typeof(QueueRequestModel<SendEmailData<BankCashInData>>)),
                 QueueType.Create(CashInData.QueueName, typeof(QueueRequestModel<SendEmailData<CashInData>>)),
                 QueueType.Create(CashInRefundData.QueueName, typeof(QueueRequestModel<SendEmailData<CashInRefundData>>)),

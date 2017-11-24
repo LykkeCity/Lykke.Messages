@@ -22,6 +22,7 @@ namespace Lykke.Messages.Utils
             var container = builder.Build();
             var sender = container.Resolve<IEmailSender>();
 
+            SendLykkeCardVisaAsync(sender).Wait();
             SendBankCashInAsync(sender).Wait();
             SendCachInAsync(sender).Wait();
             SendCashInRefundAsync(sender).Wait();
@@ -55,6 +56,15 @@ namespace Lykke.Messages.Utils
             SendSwiftConfirmedAsync(sender).Wait();
             SendTransferCompletedAsync(sender).Wait();
             SendUserRegisteredAsync(sender).Wait();
+        }
+
+        private static Task SendLykkeCardVisaAsync(IEmailSender sender)
+        {
+            return sender.SendEmailAsync(PartnerId, EmailAddress, new LykkeCardVisaData
+            {
+                Year = DateTime.Now.ToUniversalTime().Year,
+                Url = "https://card-dev.lykkex.net/123"
+            });
         }
 
         private static Task SendBankCashInAsync(IEmailSender sender)
