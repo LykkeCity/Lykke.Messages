@@ -44,6 +44,7 @@ namespace Lykke.Messages.Utils
             SendRegistrationEmailVerifyAsync(sender).Wait();
             SendRegistrationMessageAsync(sender).Wait();
             SendRejectedAsync(sender).Wait();
+            SendRestrintedAreaAsync(sender).Wait();
             SendRemindPasswordAsync(sender).Wait();
             SendRequestForDocumentAsync(sender).Wait();
             SendRequestForExpiredDocumentAsync(sender).Wait();
@@ -305,6 +306,16 @@ namespace Lykke.Messages.Utils
             {
                 FullName = "Test User Full Name",
                 Text = "Test Text",
+                Year = DateTime.UtcNow.Year.ToString()
+            });
+        }
+
+        private static Task SendRestrintedAreaAsync(IEmailSender sender)
+        {
+            return sender.SendEmailAsync(PartnerId, EmailAddress, new RestrictedAreaData
+            {
+                FirstName = "Test User First Name",
+                LastName = "Test User LAst Name",
                 Year = DateTime.UtcNow.Year.ToString()
             });
         }

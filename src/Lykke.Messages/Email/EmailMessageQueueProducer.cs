@@ -40,6 +40,7 @@ namespace Lykke.Messages.Email
                 QueueType.Create(RemindPasswordData.QueueName, typeof(QueueRequestModel<SendEmailData<RemindPasswordData>>)),
                 QueueType.Create(RequestForDocumentData.QueueName, typeof(QueueRequestModel<SendEmailData<RequestForDocumentData>>)),
                 QueueType.Create(RequestForExpiredDocumentData.QueueName, typeof(QueueRequestModel<SendEmailData<RequestForExpiredDocumentData>>)),
+                QueueType.Create(RestrictedAreaData.QueueName, typeof(QueueRequestModel<SendEmailData<RestrictedAreaData>>)),
                 QueueType.Create(SolarCashOutData.QueueName, typeof(QueueRequestModel<SendEmailData<SolarCashOutData>>)),
                 QueueType.Create(SolarCoinAddressData.QueueName, typeof(QueueRequestModel<SendEmailData<SolarCoinAddressData>>)),
                 QueueType.Create(SwapRefundData.QueueName, typeof(QueueRequestModel<SendEmailData<SwapRefundData>>)),
