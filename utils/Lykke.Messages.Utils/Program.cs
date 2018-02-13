@@ -315,8 +315,7 @@ namespace Lykke.Messages.Utils
             return sender.SendEmailAsync(PartnerId, EmailAddress, new RestrictedAreaData
             {
                 FirstName = "Test User First Name",
-                LastName = "Test User LAst Name",
-                Year = DateTime.UtcNow.Year.ToString()
+                LastName = "Test User LAst Name"
             });
         }
 

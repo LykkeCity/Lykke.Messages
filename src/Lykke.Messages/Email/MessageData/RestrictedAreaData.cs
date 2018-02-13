@@ -4,7 +4,6 @@
     {
         public const string QueueName = "RestrictedAreaEmail";
 
-
         public string FirstName { get; set; }
         public string LastName { get; set; }
     }
