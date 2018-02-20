@@ -52,7 +52,10 @@ namespace Lykke.Messages.Email
                 QueueType.Create(UserRegisteredData.QueueName, typeof(QueueRequestModel<SendBroadcastData<UserRegisteredData>>)),
                 QueueType.Create(RegistrationEmailVerifyData.QueueName, typeof(QueueRequestModel<SendEmailData<RegistrationEmailVerifyData>>)),
                 QueueType.Create(VisaShippingInfoData.QueueName, typeof(QueueRequestModel<SendEmailData<VisaShippingInfoData>>)),
-                QueueType.Create(VisaUpgradeLimitsData.QueueName, typeof(QueueRequestModel<SendEmailData<VisaUpgradeLimitsData>>))
+                QueueType.Create(VisaUpgradeLimitsData.QueueName, typeof(QueueRequestModel<SendEmailData<VisaUpgradeLimitsData>>)),
+                QueueType.Create(PaymentRequestCreatedMessageData.QueueName, typeof(QueueRequestModel<SendEmailData<PaymentRequestCreatedMessageData>>)),
+                QueueType.Create(PaymentRequestCreatedEmployeesMessageData.QueueName, typeof(QueueRequestModel<SendEmailData<PaymentRequestCreatedEmployeesMessageData>>)),
+                QueueType.Create(PaymentRequestCompletedMessageData.QueueName, typeof(QueueRequestModel<SendEmailData<PaymentRequestCompletedMessageData>>))
             );
         }
 
