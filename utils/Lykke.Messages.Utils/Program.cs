@@ -361,6 +361,7 @@ namespace Lykke.Messages.Utils
             return sender.SendEmailAsync(PartnerId, EmailAddress, new SwiftCashoutProcessedData
             {
                 FullName = "Test User Full Name",
+                DateOfWithdrawal = DateTime.UtcNow.ToShortDateString(),
                 Year = DateTime.UtcNow.Year.ToString()
             });
         }
