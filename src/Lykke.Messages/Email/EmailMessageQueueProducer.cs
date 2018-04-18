@@ -47,6 +47,7 @@ namespace Lykke.Messages.Email
                 QueueType.Create(SwiftCashoutDeclinedData.QueueName, typeof(QueueRequestModel<SendEmailData<SwiftCashoutDeclinedData>>)),
                 QueueType.Create(SwiftCashoutProcessedData.QueueName, typeof(QueueRequestModel<SendEmailData<SwiftCashoutProcessedData>>)),
                 QueueType.Create(SwiftCashOutRequestData.QueueName, typeof(QueueRequestModel<SendEmailData<SwiftCashOutRequestData>>)),
+                QueueType.Create(SwiftCashoutRequestedData.QueueName, typeof(QueueRequestModel<SendEmailData<SwiftCashoutRequestedData>>)),
                 QueueType.Create(SwiftConfirmedData.QueueName, typeof(QueueRequestModel<SendBroadcastData<SwiftConfirmedData>>)),
                 QueueType.Create(TransferCompletedData.QueueName, typeof(QueueRequestModel<SendEmailData<TransferCompletedData>>)),
                 QueueType.Create(UserRegisteredData.QueueName, typeof(QueueRequestModel<SendBroadcastData<UserRegisteredData>>)),

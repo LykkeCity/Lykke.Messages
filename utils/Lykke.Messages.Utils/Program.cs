@@ -54,6 +54,7 @@ namespace Lykke.Messages.Utils
             SendSwiftCashoutDeclinedAsync(sender).Wait();
             SendSwiftCashoutProcessedAsync(sender).Wait();
             SendSwiftCashOutRequestAsync(sender).Wait();
+            SendSwiftCashoutRequestedAsync(sender).Wait();
             SendSwiftConfirmedAsync(sender).Wait();
             SendTransferCompletedAsync(sender).Wait();
             SendUserRegisteredAsync(sender).Wait();
@@ -379,6 +380,14 @@ namespace Lykke.Messages.Utils
                 BankName = "Test Bank Name",
                 Bic = "123456",
                 CashOutRequestId = Guid.NewGuid().ToString()
+            });
+        }
+
+        private static Task SendSwiftCashoutRequestedAsync(IEmailSender sender)
+        {
+            return sender.SendEmailAsync(PartnerId, EmailAddress, new SwiftCashoutRequestedData
+            {
+                FullName = "Test User Full Name"
             });
         }
 
