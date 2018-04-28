@@ -31,7 +31,7 @@ namespace Lykke.Messages.Email
                 QueueType.Create(NoRefundOCashOutData.QueueName, typeof(QueueRequestModel<SendEmailData<NoRefundOCashOutData>>)),
                 QueueType.Create(OrdinaryCashOutRefundData.QueueName, typeof(QueueRequestModel<SendEmailData<OrdinaryCashOutRefundData>>)),
                 QueueType.Create(PasswordRecoveryEmailComfirmationData.QueueName, typeof(QueueRequestModel<SendEmailData<PasswordRecoveryEmailComfirmationData>>)),
-                QueueType.Create(PlainTextBroadCastData.QueueName, typeof(QueueRequestModel<SendEmailData<PlainTextBroadCastData>>)),
+                QueueType.Create(PlainTextBroadCastData.QueueName, typeof(QueueRequestModel<SendBroadcastData<PlainTextBroadCastData>>)),
                 QueueType.Create(PlainTextData.QueueName, typeof(QueueRequestModel<SendEmailData<PlainTextData>>)),
                 QueueType.Create(PrivateWalletAddressData.QueueName, typeof(QueueRequestModel<SendEmailData<PrivateWalletAddressData>>)),
                 QueueType.Create(PrivateWalletBackupData.QueueName, typeof(QueueRequestModel<SendEmailData<PrivateWalletBackupData>>)),
