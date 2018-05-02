@@ -59,7 +59,8 @@ namespace Lykke.Messages.Email
                 QueueType.Create(PaymentRequestCompletedMessageData.QueueName, typeof(QueueRequestModel<SendEmailData<PaymentRequestCompletedMessageData>>)),
                 QueueType.Create(RegistrationCypMessageData.QueueName, typeof(QueueRequestModel<SendEmailData<RegistrationCypMessageData>>)),
                 QueueType.Create(KycOkCypData.QueueName, typeof(QueueRequestModel<SendEmailData<KycOkCypData>>)),
-                QueueType.Create(ActionConfirmationData.QueueName, typeof(QueueRequestModel<SendEmailData<ActionConfirmationData>>))
+                QueueType.Create(ActionConfirmationData.QueueName, typeof(QueueRequestModel<SendEmailData<ActionConfirmationData>>)),
+                QueueType.Create(NoAccountPasswordRecoveryData.QueueName, typeof(QueueRequestModel<SendEmailData<NoAccountPasswordRecoveryData>>))
             );
         }
 
