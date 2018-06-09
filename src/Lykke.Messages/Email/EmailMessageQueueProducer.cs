@@ -62,7 +62,9 @@ namespace Lykke.Messages.Email
                 QueueType.Create(KycOkCypData.QueueName, typeof(QueueRequestModel<SendEmailData<KycOkCypData>>)),
                 QueueType.Create(DirectTransferCompletedCypData.QueueName, typeof(QueueRequestModel<SendEmailData<DirectTransferCompletedCypData>>)),
                 QueueType.Create(ActionConfirmationData.QueueName, typeof(QueueRequestModel<SendEmailData<ActionConfirmationData>>)),
-                QueueType.Create(NoAccountPasswordRecoveryData.QueueName, typeof(QueueRequestModel<SendEmailData<NoAccountPasswordRecoveryData>>))
+                QueueType.Create(NoAccountPasswordRecoveryData.QueueName, typeof(QueueRequestModel<SendEmailData<NoAccountPasswordRecoveryData>>)),
+                QueueType.Create(SwiftCashoutDeclinedCypData.QueueName, typeof(QueueRequestModel<SendEmailData<SwiftCashoutDeclinedCypData>>)),
+                QueueType.Create(SwiftCashoutProcessedCypData.QueueName, typeof(QueueRequestModel<SendEmailData<SwiftCashoutProcessedCypData>>))
             );
         }
 
