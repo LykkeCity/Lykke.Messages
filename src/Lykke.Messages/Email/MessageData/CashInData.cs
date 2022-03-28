@@ -16,6 +16,8 @@ namespace Lykke.Messages.Email.MessageData
         public string AddressName { get; set; }
 
         public string AssetId { get; set; }
+        
+        public string BlockchainNetworkName { get; set; }
 
         [Obsolete]
         public string Multisig { get; set; }
